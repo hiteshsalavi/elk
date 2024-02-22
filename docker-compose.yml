@@ -1,3 +1,6 @@
+# References
+# https://www.elastic.co/guide/en/beats/libbeat/5.3/config-file-permissions.html#_disabling_strict_permission_checks
+
 version: "3.8"
 
 
@@ -161,7 +164,7 @@ services:
      kibana:
        condition: service_healthy
    image: docker.elastic.co/beats/metricbeat:${STACK_VERSION}
-   entrypoint: "metricbeat -e -strict.perms=false"
+  #  chmod 644 metricbeat.yml - works
    user: root
    volumes:
      - certs:/usr/share/metricbeat/certs
@@ -206,7 +209,6 @@ services:
      kibana:
        condition: service_healthy
    image: docker.elastic.co/logstash/logstash:${STACK_VERSION}
-  #  entrypoint: "logstash -e -strict.perms=false"
    labels:
      co.elastic.logs/module: logstash
    user: root
